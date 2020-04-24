@@ -5,10 +5,10 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-	public enum Type
+	public enum Condition
 	{
-		Timed,
-		Caught
+		TimeElapsed,
+		InsectsCaught
 	}
 
 	private enum State
@@ -21,9 +21,9 @@ public class Player : MonoBehaviour
 	public Transform holdPoint;
 	public GameObject tutorialRoot;
 
-	public Type gameType = Type.Timed;
-	public float gameLength = 120f;
-	public int catchCount = 10;
+	[Header("Game End")] public Condition condition = Condition.TimeElapsed;
+	public float conditionTimeElapsed = 120f;
+	public int conditionInsectsCaught = 10;
 
 	[Header("UI")] public GameObject uiRoot;
 	public Text scoreText;
@@ -62,18 +62,18 @@ public class Player : MonoBehaviour
 	{
 		if (state == State.Game)
 		{
-			switch (gameType)
+			switch (condition)
 			{
-				case Type.Caught:
+				case Condition.InsectsCaught:
 				{
-					if (correct + incorrect >= catchCount)
+					if (correct + incorrect >= conditionInsectsCaught)
 					{
 						EndGame();
 					}
 
 					break;
 				}
-				case Type.Timed:
+				case Condition.TimeElapsed:
 				{
 					if (Time.time > gameUntil)
 					{
@@ -144,17 +144,35 @@ public class Player : MonoBehaviour
 			jar.ResetScore();
 		}
 
-		gameUntil = Time.time + gameLength;
+		gameUntil = Time.time + conditionTimeElapsed;
 		//text.SetText("");
+	}
+
+	private void ReleaseInsect()
+	{
+		if (heldInsect == null) return;
+		heldInsect.GetComponent<DrunkenWasp>().OnHeldEnd();
+		heldInsect = null;
 	}
 
 	public void SelectItem(GameObject item)
 	{
-		var jarScript = item.GetComponent<JarScript>();
-		if (jarScript != null)
+		Debug.Log(item);
+		if (item != null)
 		{
-			if (heldInsect != null)
+			var waspScript = item.GetComponent<DrunkenWasp>();
+			if (waspScript != null)
 			{
+				ReleaseInsect();
+				waspScript.OnHeldStart();
+				heldInsect = item;
+				return;
+			}
+
+			var jarScript = item.GetComponent<JarScript>();
+			if (jarScript != null)
+			{
+				if (heldInsect == null) return;
 				if (state == State.Tutorial)
 				{
 					StartGame();
@@ -174,19 +192,7 @@ public class Player : MonoBehaviour
 				}
 			}
 		}
-		else
-		{
-			var waspScript = item.GetComponent<DrunkenWasp>();
-			if (waspScript != null)
-			{
-				if (heldInsect != null)
-				{
-					heldInsect.GetComponent<DrunkenWasp>().OnHeldEnd();
-				}
 
-				waspScript.OnHeldStart();
-				heldInsect = item;
-			}
-		}
+		ReleaseInsect();
 	}
 }

@@ -4168,6 +4168,11 @@ PrefabInstance:
       propertyPath: something
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3835184615285779881, guid: d36e81026029d2348bddd21444833cdc,
+        type: 3}
+      propertyPath: staticInsect
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5050994793581901373, guid: d36e81026029d2348bddd21444833cdc,
         type: 3}
       propertyPath: m_Name
@@ -4626,7 +4631,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh15294
+  m_Name: pb_Mesh15356
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -7476,10 +7481,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   holdPoint: {fileID: 640953202}
-  tutorialRoot: {fileID: 0}
-  gameType: 0
-  gameLength: 120
-  catchCount: 10
+  tutorialRoot: {fileID: 1492668330}
+  condition: 0
+  conditionTimeElapsed: 120
+  conditionInsectsCaught: 10
   uiRoot: {fileID: 1153655784}
   scoreText: {fileID: 29456968}
   correctText: {fileID: 1368113424}
@@ -7755,7 +7760,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh15256
+  m_Name: pb_Mesh15318
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -29441,12 +29446,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2019488748}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Script: {fileID: 11500000, guid: 739800cd36aba44e9b04ce977e5784bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
-  m_BlockingMask:
+  ignoreReversedGraphics: 1
+  blockingObjects: 2
+  blockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
 --- !u!114 &2019488751
